@@ -1,0 +1,112 @@
+{
+  "1": {
+    "title": "Linux Basics: Navigation",
+    "desc": "In this module, you will learn how to move around the Linux filesystem. You will master the commands used to identify your current location, list files, and enter different directories. These are the fundamental skills every security researcher needs to audit a system.",
+    "tasks": [
+      {"cmd": "pwd", "desc": "Identify your current location by printing the absolute path of the working directory.", "res": "/home/user/Desktop"},
+      {"cmd": "ls", "desc": "List the files and folders in your current location to see what is available.", "res": "Documents  Downloads  Music  Videos  lab_notes.txt"},
+      {"cmd": "cd Documents", "desc": "Change your current directory to the 'Documents' folder.", "res": "user@lab:~/Documents$"},
+      {"cmd": "ls -a", "desc": "List all entries, including hidden files that start with a dot (.) which often contain configurations.", "res": ".  ..  .bashrc  .config  secret_projects"},
+      {"cmd": "cd ..", "desc": "Move back up one level to the parent directory.", "res": "user@lab:~$"}
+    ]
+  },
+  "2": {
+    "title": "File Operations",
+    "desc": "This lesson focuses on managing data. You will learn how to create, move, rename, and delete files and directories. Mastering these commands allows you to organize your tools and exfiltrate data efficiently during a penetration test.",
+    "tasks": [
+      {"cmd": "touch evidence.txt", "desc": "Create a new empty file named 'evidence.txt' in your current directory.", "res": ""},
+      {"cmd": "mkdir Loot", "desc": "Create a new directory named 'Loot' to store collected data.", "res": ""},
+      {"cmd": "cp evidence.txt Loot/", "desc": "Copy the 'evidence.txt' file into the 'Loot' directory.", "res": ""},
+      {"cmd": "mv evidence.txt discovery.txt", "desc": "Rename 'evidence.txt' to 'discovery.txt' to hide its original purpose.", "res": ""},
+      {"cmd": "rm discovery.txt", "desc": "Permanently remove the file from the system to leave no trace.", "res": ""}
+    ]
+  },
+  "3": {
+    "title": "System Information",
+    "desc": "Before performing an attack, you must understand the target environment. This module teaches you how to gather system specs, kernel versions, and hardware information to choose the correct exploit for the target's architecture.",
+    "tasks": [
+      {"cmd": "uname -a", "desc": "Print all system information including the kernel version and architecture.", "res": "Linux rca-lab 6.1.0-kali7-amd64 #1 SMP PREEMPT_DYNAMIC"},
+      {"cmd": "whoami", "desc": "Display the username of the current effective user ID.", "res": "user"},
+      {"cmd": "df -h", "desc": "Show the amount of available disk space on file systems in human-readable format.", "res": "/dev/sda1  40G  18G  20G  48% /"},
+      {"cmd": "free -m", "desc": "Display the amount of free and used memory in the system in Megabytes.", "res": "Mem: 8192  3400  4792"},
+      {"cmd": "uptime", "desc": "Find out how long the system has been running and the current load average.", "res": "11:05:20 up 4:12, 1 user, load average: 0.05, 0.02, 0.01"}
+    ]
+  },
+  "4": {
+    "title": "Network Reconnaissance",
+    "desc": "Networking is the backbone of cybersecurity. You will learn to identify your network interface, test connectivity to remote hosts, and perform fast port scans to find entry points into a target network.",
+    "tasks": [
+      {"cmd": "ip addr", "desc": "Display all network interfaces and their assigned IP addresses.", "res": "2: eth0: <BROADCAST,MULTICAST> mtu 1500 inet 10.11.73.5/24"},
+      {"cmd": "ping -c 4 10.11.73.1", "desc": "Send 4 ICMP packets to a host to verify if it is reachable on the network.", "res": "4 packets transmitted, 4 received, 0% packet loss"},
+      {"cmd": "nmap -F 10.11.73.1", "desc": "Perform a fast scan of the top 100 most common ports on the target IP.", "res": "PORT 22/tcp open  ssh\nPORT 80/tcp open  http"},
+      {"cmd": "netstat -tuln", "desc": "List all active listening ports on your own machine to check for backdoors.", "res": "tcp 0 0 0.0.0.0:22  0.0.0.0:* LISTEN"},
+      {"cmd": "nslookup google.com", "desc": "Query DNS servers to find the IP address associated with a domain name.", "res": "Server: 8.8.8.8  Address: 142.250.1.1"}
+    ]
+  },
+  "5": {
+    "title": "Permission Management",
+    "desc": "Linux security relies on permissions. In this module, you will learn to read permission strings (rwx) and modify them to secure files or grant yourself execution rights on scripts.",
+    "tasks": [
+      {"cmd": "ls -l", "desc": "List files with detailed attributes including permissions, owner, and size.", "res": "-rw-r--r-- 1 user user 1024 Mar 18 secret.txt"},
+      {"cmd": "chmod +x game.py", "desc": "Add execution permissions to a file so it can be run as a program.", "res": ""},
+      {"cmd": "chmod 700 secret.txt", "desc": "Restrict a file so only the owner can read, write, or execute it.", "res": ""},
+      {"cmd": "chown root secret.txt", "desc": "Attempt to change the file owner to root (expect a permission error).", "res": "chown: changing ownership of 'secret.txt': Operation not permitted"},
+      {"cmd": "sudo chown user secret.txt", "desc": "Use administrative privileges (sudo) to force a change in file ownership.", "res": "[sudo] password for user:"}
+    ]
+  },
+  "6": {
+    "title": "Package Management",
+    "desc": "Modern Linux systems use package managers to install and update software. You will learn how to synchronize repositories and manage the lifecycle of security tools on your system.",
+    "tasks": [
+      {"cmd": "sudo apt update", "desc": "Download the latest package information from the configured repositories.", "res": "Hit:1 http://http.kali.org/kali kali-rolling InRelease"},
+      {"cmd": "apt list --installed", "desc": "List all software packages currently installed on the system.", "res": "python3/now 3.11.2-1 amd64 [installed]"},
+      {"cmd": "sudo apt install ncat", "desc": "Install the Ncat networking utility from the official repositories.", "res": "ncat is already the newest version (7.93+dfsg1-1)."},
+      {"cmd": "apt search nmap", "desc": "Search the repositories for any software related to 'nmap'.", "res": "nmap/kali-rolling 7.93+dfsg1-1 amd64"},
+      {"cmd": "sudo apt remove telnet", "desc": "Uninstall insecure legacy protocols like Telnet from your machine.", "res": "Removing telnet (0.17-44) ..."}
+    ]
+  },
+  "7": {
+    "title": "Process Control",
+    "desc": "A hacker must monitor what is running on the system. This lesson covers viewing active processes, monitoring CPU/RAM usage in real-time, and terminating unresponsive or malicious programs.",
+    "tasks": [
+      {"cmd": "ps aux", "desc": "List every process currently running on the system with user and PID details.", "res": "USER PID %CPU %MEM COMMAND\nuser 1234 0.5 1.2 python3 game.py"},
+      {"cmd": "top", "desc": "Launch an interactive real-time monitor for system processes and resource usage.", "res": "Tasks: 120 total, 1 running, 119 sleeping\n%Cpu(s): 2.5 us, 1.0 sy"},
+      {"cmd": "kill -9 1234", "desc": "Send a SIGKILL signal to immediately stop a process using its Process ID (PID).", "res": ""},
+      {"cmd": "jobs", "desc": "Check for any processes you have running in the background of this terminal.", "res": "[1]+  Running                 python3 backdoor.py &"},
+      {"cmd": "bg", "desc": "Resume a suspended job by running it in the background.", "res": "[1]+ python3 backdoor.py &"}
+    ]
+  },
+  "8": {
+    "title": "Credential Auditing",
+    "desc": "This module introduces the basics of password security. You will learn how Linux stores user accounts and how to use specialized tools like Hydra and John the Ripper to audit credential strength.",
+    "tasks": [
+      {"cmd": "cat /etc/passwd", "desc": "Read the file containing basic user account information (excluding passwords).", "res": "root:x:0:0:root:/root:/bin/bash\nuser:x:1000:1000:user,,,:/home/user:/bin/bash"},
+      {"cmd": "hydra -l admin -p 123 ssh://10.11.73.1", "desc": "Perform a targeted SSH login test using the password '123'.", "res": "[22][ssh] host: 10.11.73.1  login: admin  password: 123"},
+      {"cmd": "john hashes.txt", "desc": "Use John the Ripper to crack password hashes using a wordlist.", "res": "Loaded 1 password hash (HMAC-SHA256)\npassword123      (admin)"},
+      {"cmd": "hashcat -I", "desc": "Identify and list available hardware (CPU/GPU) for high-speed hash cracking.", "res": "Device #1: Intel(R) Core(TM) i7-10700K CPU @ 3.80GHz"},
+      {"cmd": "grep 'user' /etc/shadow", "desc": "View the encrypted password hash for the current user (requires root).", "res": "user:$6$rounds=4096$ZK...:19420:0:99999:7:::"}
+    ]
+  },
+  "9": {
+    "title": "Exploitation Basics",
+    "desc": "Metasploit is the industry-standard exploitation framework. In this lesson, you will learn to navigate the console, search for known vulnerabilities, and configure exploit parameters for a target.",
+    "tasks": [
+      {"cmd": "msfconsole -q", "desc": "Launch the Metasploit Framework in quiet mode without the banner.", "res": "msf6 >"},
+      {"cmd": "search eternalblue", "desc": "Search the Metasploit database for exploits targeting the EternalBlue vulnerability.", "res": "0  exploit/windows/smb/ms17_010_eternalblue"},
+      {"cmd": "use 0", "desc": "Select the first exploit from the search results to begin configuration.", "res": "msf6 exploit(windows/smb/ms17_010_eternalblue) >"},
+      {"cmd": "show options", "desc": "List all required settings (IPs, Ports, Payloads) for the selected exploit.", "res": "Name   Current Setting  Required\n----   ---------------  --------\nRHOSTS                  yes"},
+      {"cmd": "exit", "desc": "Terminate the Metasploit session and return to the standard Linux shell.", "res": "user@lab:~$"}
+    ]
+  },
+  "10": {
+    "title": "Persistence & Cleanup",
+    "desc": "Ethical hackers must manage their footprint. This final module covers how persistence is established using scheduled tasks and the critical importance of cleaning up files and logs after a demo.",
+    "tasks": [
+      {"cmd": "crontab -l", "desc": "List the scheduled jobs for the current user to find automated persistence scripts.", "res": "@reboot python3 /home/user/Desktop/game.py --silent &"},
+      {"cmd": "ls /tmp", "desc": "Audit the temporary directory for any installers or logs left behind.", "res": "pygame.deb  ncat_debug.log"},
+      {"cmd": "rm /tmp/pygame.deb", "desc": "Delete the temporary installer file to free up space and hide activity.", "res": ""},
+      {"cmd": "python3 cleaner.py", "desc": "Run the custom RCA Cleanup tool to remove the crontab entry and hide the backdoor.", "res": "[*] Cleanup complete. System is now secure."},
+      {"cmd": "history -c", "desc": "Clear the bash command history so no one can see which commands were run.", "res": ""}
+    ]
+  }
+}
