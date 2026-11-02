@@ -180,3 +180,4 @@ cython_debug/
 .cursorindexingignore
 config.bat
 node_modules
+.vscode/tasks.json
